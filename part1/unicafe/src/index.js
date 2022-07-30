@@ -27,12 +27,19 @@ const Score = ({text, count}) => {
 }
 
 const Statistics = ({goodCount, neutralCount, badCount}) => {
+  const total = goodCount + neutralCount + badCount
+  const average = (goodCount - badCount) / total
+  const positive = (goodCount * 100) / total
+
   return (
     <div>
       <h1>statistics</h1>
       <Score text={"good"} count={goodCount}/>
       <Score text={"neutral"} count={neutralCount}/>
       <Score text={"bad"} count={badCount}/>
+      <Score text={"all"} count={total}/>
+      <Score text={"average"} count={average}/>
+      <Score text={"positive"} count={positive}/>
     </div>
   )
 }
