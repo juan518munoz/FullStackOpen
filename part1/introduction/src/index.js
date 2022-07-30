@@ -1,34 +1,45 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Hello = (props) => {
+const Display = ({counter}) => <div>{counter}</div>
+
+const Button = ({handleClick, text}) => {
   return (
-    <div>
-        Hello {props.name}, you are {props.age} years old
-    </div>
+    <button onClick={handleClick}>
+      {text}
+    </button>
   )
 }
 
-const Footer = () => {
+const Buttons = ({increaseCount, resetCount}) => {
   return (
     <div>
-        <a href='https://github.com/juan518munoz/'>GithubPage</a>
+      <Button handleClick={increaseCount} text={"increase count"}/>
+      <Button handleClick={resetCount} text={"reset count"}/>
     </div>
   )
 }
 
 const App = () => {
-  const name = "Martin"
-  const age = 10
+  const [ counter, setCounter ] = useState(0) // le agrega 'state' al componente counter y lo inicializa en 0
+                                              // setCounter es la funcion que setea (cambia de state) al counter
+
+  const increaseCount = () => setCounter(counter + 1)
+
+  const resetCount = () => setCounter(0) 
 
   return (
-    <div>
-      <h1>Greetings</h1>
-      <Hello name="Juan" age={26 + 10}/>
-      <Hello name={name} age={age}/>
-      <Footer />
+    <div> 
+      <Display counter={counter}/>
+      <Buttons 
+        increaseCount={increaseCount} 
+        resetCount={resetCount} 
+      />
     </div>
   )
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render (
+  <App />,
+  document.getElementById('root')
+)
