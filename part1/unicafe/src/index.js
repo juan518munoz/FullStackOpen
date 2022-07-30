@@ -22,7 +22,10 @@ const Feedback = ({increaseGood, increaseNeutral, increaseBad}) => {
 
 const Score = ({text, value}) => {
   return (
-    <p>{text} {value}</p>
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
   )
 }
 
@@ -43,12 +46,16 @@ const Statistics = ({goodCount, neutralCount, badCount}) => {
   return (
     <div>
       <h1>statistics</h1>
-      <Score text={"good"} value={goodCount}/>
-      <Score text={"neutral"} value={neutralCount}/>
-      <Score text={"bad"} value={badCount}/>
-      <Score text={"all"} value={total}/>
-      <Score text={"average"} value={average}/>
-      <Score text={"positive"} value={positive}/>
+      <table>
+        <tbody>
+          <Score text={"good"} value={goodCount}/>
+          <Score text={"neutral"} value={neutralCount}/>
+          <Score text={"bad"} value={badCount}/>
+          <Score text={"all"} value={total}/>
+          <Score text={"average"} value={average}/>
+          <Score text={"positive"} value={positive}/>
+        </tbody>
+      </table>
     </div>
   )
 }
