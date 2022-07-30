@@ -12,6 +12,7 @@ const Button = ({onClick, text}) => {
 const Anecdotes = ({anecdote, votes, voteAnecdote, nextAnecdote}) => {
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdote}</p>
       <p>has {votes} votes</p>
       <Button onClick={voteAnecdote} text={"vote"} />
@@ -20,10 +21,21 @@ const Anecdotes = ({anecdote, votes, voteAnecdote, nextAnecdote}) => {
   )
 }
 
+const BestAnecdote = ({anecdote, votes}) => {  
+  return (
+    <div>
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdote}</p>
+      <p>has {votes} votes</p>
+    </div>
+  )
+}
+
 const App = ({anecdotes}) => {
   // random anecdote
   const [selected, setSelected] = useState( Math.floor(Math.random() * 5) )
   const [votes, setVotes] = useState( Array(5).fill(0) )
+  const [best, setBest] = useState(selected)
 
   const nextAnecdote = () => {
     const current = selected
@@ -38,6 +50,24 @@ const App = ({anecdotes}) => {
       const copy = [...votes]
       copy[selected] += 1
       setVotes(copy)
+
+      bestAnecdote() // update current best
+  }
+
+  const bestAnecdote = () => {
+    let indexBest = 0
+    let currentHighest = 0
+
+    let index = 0
+    votes.forEach(anecdoteVotes => {
+      if (anecdoteVotes >= currentHighest) {
+        currentHighest = anecdoteVotes;
+        indexBest = index
+      }
+      index++
+    });
+
+    setBest(indexBest)
   }
 
   return (
@@ -47,6 +77,10 @@ const App = ({anecdotes}) => {
         votes={votes[selected]}
         voteAnecdote={voteAnecdote}
         nextAnecdote={nextAnecdote}
+      />
+      <BestAnecdote
+        anecdote={anecdotes[best]} 
+        votes={votes[best]}
       />
     </div>
   )
