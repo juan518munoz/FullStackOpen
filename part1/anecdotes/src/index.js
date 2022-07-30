@@ -26,7 +26,12 @@ const App = ({anecdotes}) => {
   const [votes, setVotes] = useState( Array(5).fill(0) )
 
   const nextAnecdote = () => {
-    setSelected( Math.floor(Math.random() * 5) )
+    const current = selected
+    let next = selected
+    while (current === next) { // to avoid repetition
+      next = Math.floor(Math.random() * 5)
+    }
+    setSelected(next)
   }
 
   const voteAnecdote = () => {
