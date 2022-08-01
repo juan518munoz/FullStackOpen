@@ -45,7 +45,7 @@ const App = ({anecdotes}) => {
     }
     setSelected(next)
   }
-
+  
   const voteAnecdote = () => {
       const copy = [...votes]
       copy[selected] += 1
