@@ -16,12 +16,17 @@ const App = () => {
     event.preventDefault() // evita que se recarge la pagina
     console.log("Adding ", newName, " to contacts")
     
-    const newPerson = {
-      name: newName
-    }
+    if ( persons.every( (person) => person.name !== newName )) {
+      const newPerson = {
+        name: newName
+      }
+  
+      setPersons(persons.concat(newPerson))
+      setNewName('')
+      return
+    } 
 
-    setPersons(persons.concat(newPerson))
-    setNewName('')
+    alert(`${newName} is already added to phonebook`)
   }
 
   return (
