@@ -3,6 +3,10 @@ import Languages from "./Languages"
 
 
 const CountryFull = ({country}) => {
+    
+    const api_key = process.env.REACT_APP_API_KEY
+    console.log(api_key)
+
     return (
         <div>
             <h1>{country.name.common}</h1>
