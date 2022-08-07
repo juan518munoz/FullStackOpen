@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import Languages from "./Languages"
 
 
@@ -13,7 +13,7 @@ const CountryFull = ({country}) => {
 
             <Languages languages={country.languages} /> <br></br>
             
-            <img src={country.flags.png}></img>
+            <img src={country.flags.png} alt="flag"></img>
         </div>
     )
 }
