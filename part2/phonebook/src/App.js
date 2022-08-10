@@ -31,7 +31,6 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault() // evita que se recarge la pagina
-    console.log("Adding ", newName, " to contacts")
     
     if ( persons.every( (person) => person.name !== newName )) {
       const newPerson = {
@@ -48,7 +47,8 @@ const App = () => {
       return
     } 
 
-    alert(`${newName} is already added to phonebook`)
+    modifyContact()
+
   }
 
   const filterPhoneBookByName = () => {
@@ -67,6 +67,22 @@ const App = () => {
     }
   }
 
+  const modifyContact = () => {
+    if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+      const person = persons.find(p => p.name === newName)
+      const modPerson = { ...person, number: newNumber }
+      const id = person.id
+
+      phoneService.update(id, modPerson).then( returnedPerson => {
+        setPersons(persons.map(person =>
+          person.id !== id ? person : returnedPerson          
+        ))
+        setNewName('')
+        setNewNumber('')
+      })
+    }
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -78,7 +94,9 @@ const App = () => {
           handleName={handleNameChange}
           handleNumber={handleNumberChange}
       />
-      <Numbers persons={filteredPersons} deleteContact={deleteContact}/>
+      <Numbers 
+        persons={filteredPersons} 
+        deleteContact={deleteContact}/>
     </div>
     
   )
