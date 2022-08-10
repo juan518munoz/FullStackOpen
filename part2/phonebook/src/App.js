@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import phoneService from './services/phoneService'
 import Filter from './components/Filter'
 import NewContactForm from './components/NewContactForm' 
 import Numbers from './components/Numbers'
@@ -10,14 +10,10 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [ newNameFilter, setNewNameFilter ] = useState('')
 
-  const hook = () => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
+  const hook = () => {    
+    phoneService.getAll().then(response => {
+      setPersons(response)
+    })
   }
   useEffect(hook, [])
 
@@ -43,9 +39,12 @@ const App = () => {
         number: newNumber
       }
   
-      setPersons(persons.concat(newPerson))
-      setNewName('')
-      setNewNumber('')
+      phoneService.create(newPerson).then( addedPerson => {
+        console.log(addedPerson)
+        setPersons(persons.concat(addedPerson))
+        setNewName('')
+        setNewNumber('')
+      })
       return
     } 
 
