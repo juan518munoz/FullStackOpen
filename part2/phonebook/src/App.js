@@ -47,7 +47,7 @@ const App = () => {
       return
     } 
 
-    modifyContact()
+    modifyContact() // if it gets here then it's already on phonebook
 
   }
 
