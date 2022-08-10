@@ -60,6 +60,13 @@ const App = () => {
   }
   const filteredPersons = filterPhoneBookByName()
 
+  const deleteContact = (id, person) => {
+    if (window.confirm(`Delete ${person}?`)) {
+      phoneService.remove(id)
+      setPersons(persons.filter(person => person.id !== id))  
+    }
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -71,7 +78,7 @@ const App = () => {
           handleName={handleNameChange}
           handleNumber={handleNumberChange}
       />
-      <Numbers persons={filteredPersons} />
+      <Numbers persons={filteredPersons} deleteContact={deleteContact}/>
     </div>
     
   )
