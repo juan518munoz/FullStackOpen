@@ -3,12 +3,14 @@ import phoneService from './services/phoneService'
 import Filter from './components/Filter'
 import NewContactForm from './components/NewContactForm' 
 import Numbers from './components/Numbers'
+import Notification from './components/Notificarion'
 
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ newNameFilter, setNewNameFilter ] = useState('')
+  const [ notification, setNotification ] = useState('')
 
   const hook = () => {    
     phoneService.getAll().then(response => {
@@ -43,7 +45,14 @@ const App = () => {
         setPersons(persons.concat(addedPerson))
         setNewName('')
         setNewNumber('')
+
+        setNotification(`Added ${addedPerson.name}`)
+        setTimeout(() => {
+          setNotification('')
+        }, 5000)
+
       })
+
       return
     } 
 
@@ -79,6 +88,13 @@ const App = () => {
         ))
         setNewName('')
         setNewNumber('')
+
+
+        setNotification(`Modified ${returnedPerson.name}`)
+        setTimeout(() => {
+          setNotification('')
+        }, 5000)
+
       })
     }
   }
@@ -86,6 +102,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification notification={notification} />
       <Filter newNameFilter={newNameFilter} handle={handleNameFilterChange} />
       <NewContactForm 
           addPerson={addPerson}
