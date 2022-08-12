@@ -11,6 +11,7 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [ newNameFilter, setNewNameFilter ] = useState('')
   const [ notification, setNotification ] = useState('')
+  const [ notificationType, setNotificationType ] = useState('success')
 
   const hook = () => {    
     phoneService.getAll().then(response => {
@@ -46,6 +47,7 @@ const App = () => {
         setNewName('')
         setNewNumber('')
 
+        setNotificationType('success')
         setNotification(`Added ${addedPerson.name}`)
         setTimeout(() => {
           setNotification('')
@@ -89,12 +91,18 @@ const App = () => {
         setNewName('')
         setNewNumber('')
 
-
+        setNotificationType('success')
         setNotification(`Modified ${returnedPerson.name}`)
         setTimeout(() => {
           setNotification('')
         }, 5000)
 
+      }).catch(error => {        
+        setNotificationType('error')
+        setNotification(`Information of ${person.name} has already been removed from server`)
+        setTimeout(() => {
+          setNotification('')
+        }, 5000)
       })
     }
   }
@@ -102,7 +110,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification notification={notification} />
+      <Notification notification={notification} type={notificationType}/>
       <Filter newNameFilter={newNameFilter} handle={handleNameFilterChange} />
       <NewContactForm 
           addPerson={addPerson}
